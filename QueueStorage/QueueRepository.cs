@@ -54,12 +54,12 @@ namespace Console
             }
         }
 
-        public bool PeekMessage()
+        public bool PeekMessage(int id)
         {
             try
             {
                 PeekedMessage[] peekedMessage = _queueClient.PeekMessages();
-                System.Console.WriteLine($"Peeked message: '{peekedMessage[0].Body}'");
+                System.Console.WriteLine($"Peeked message: '{peekedMessage[id].Body}'");
                 return true;
             }
             catch (Exception ex)
@@ -97,7 +97,7 @@ namespace Console
             {
                 QueueMessage[] retrievedMessage = _queueClient.ReceiveMessages();
                 System.Console.WriteLine($"Dequeued message: '{retrievedMessage[id].Body}'");
-                _queueClient.DeleteMessage(retrievedMessage[id].MessageId, retrievedMessage[0].PopReceipt);
+                _queueClient.DeleteMessage(retrievedMessage[id].MessageId, retrievedMessage[id].PopReceipt);
                 return true;
             }
             catch (Exception ex)

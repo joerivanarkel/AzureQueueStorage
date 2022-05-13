@@ -11,12 +11,10 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldCreateQueue()
     {
-        Fixture fixture = new Fixture();
+        var fixture = new Fixture();
         fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
-        var mockconnectionstring = fixture.Create<string>();
-        var mockqueuename = fixture.Create<string>();
-        QueueClient queueClient = fixture.Create<QueueClient>();
-        QueueRepository queueRepository = new QueueRepository(queueClient);
+        var queueClient = fixture.Create<QueueClient>();
+        var queueRepository = new QueueRepository(queueClient);
 
         var result = queueRepository.CreateQueue();
         Assert.True(result);
@@ -25,7 +23,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldInsertMessage()
     {
-        Fixture fixture = new Fixture();
+        var fixture = new Fixture();
         fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
         QueueClient queueClient = fixture.Create<QueueClient>();
         QueueRepository queueRepository = new QueueRepository(queueClient);
@@ -42,7 +40,7 @@ public class QueueRepositoryTest
         QueueClient queueClient = fixture.Create<QueueClient>();
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
-        var result = queueRepository.PeekMessage();
+        var result = queueRepository.PeekMessage(1);
         Assert.True(result);
     }
 
