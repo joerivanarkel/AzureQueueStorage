@@ -26,5 +26,5 @@ jobs:
     - name: Test
       run: dotnet test
       env:
-        connectionstring: ${{ secrets.CONNECTIONSTRING }}
+        connectionString: ${{ secrets.CONNECTIONSTRING }}
 
