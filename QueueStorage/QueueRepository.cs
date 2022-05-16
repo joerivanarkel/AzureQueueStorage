@@ -16,7 +16,6 @@ namespace Console
         {
             try
             {
-                // Create the queue
                 _queueClient.CreateIfNotExists();
 
                 if (_queueClient.Exists())
