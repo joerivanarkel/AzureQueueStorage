@@ -7,10 +7,18 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  replace:
     runs-on: ubuntu-latest
-
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find and Replace
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "REPLACE"
+          replace: ${{ secrets.CONNECTIONSTRING }}
+          
+  build:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -24,7 +32,6 @@ jobs:
       env:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
     - name: Test
-      run: dotnet test
+      run: dotnet test --no-restore
       env:
-        connectionString: ${{ secrets.CONNECTIONSTRING }}
-
+        connectionstring: ${{ secrets.CONNECTIONSTRING }}
