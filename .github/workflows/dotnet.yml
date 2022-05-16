@@ -15,10 +15,11 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "REPLACE"
-          replace: ${{ secrets.CONNECTIONSTRING }}
+          replace: "${{ secrets.CONNECTIONSTRING }}"
           
   build:
     runs-on: ubuntu-latest
+    needs: replace
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
