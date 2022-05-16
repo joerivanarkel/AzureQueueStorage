@@ -9,7 +9,7 @@ QueueRepository queueRepository = new QueueRepository(queueClient);
 
 queueRepository.CreateQueue();
 queueRepository.InsertMessage("testing message");
-queueRepository.PeekMessage(1);
-queueRepository.UpdateMessage(1);
-queueRepository.PeekMessage(1);
-queueRepository.DequeueMessage(1);
+queueRepository.PeekMessage();
+queueRepository.UpdateMessage();
+queueRepository.PeekMessage();
+queueRepository.DequeueMessage();

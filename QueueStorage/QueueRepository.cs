@@ -54,12 +54,12 @@ namespace Console
             }
         }
 
-        public bool PeekMessage(int id)
+        public bool PeekMessage()
         {
             try
             {
                 PeekedMessage[] peekedMessage = _queueClient.PeekMessages();
-                System.Console.WriteLine($"Peeked message: '{peekedMessage[id].Body}'");
+                System.Console.WriteLine($"Peeked message: '{peekedMessage[0].Body}'");
                 return true;
             }
             catch (Exception ex)
@@ -70,17 +70,17 @@ namespace Console
             }
         }
 
-        public bool UpdateMessage(int id)
+        public bool UpdateMessage()
         {
             try
             {
                 QueueMessage[] message = _queueClient.ReceiveMessages();
-                _queueClient.UpdateMessage(message[id].MessageId,
+                _queueClient.UpdateMessage(message[0].MessageId,
                     message[0].PopReceipt,
                     "Updated contents",
                     TimeSpan.FromSeconds(60.0)  // Make it invisible for another 60 seconds
                 );
-                System.Console.WriteLine($"Updated message: '{message[id].Body}'");
+                System.Console.WriteLine($"Updated message: '{message[0].Body}'");
                 return true;
             }
             catch (Exception ex)
@@ -91,13 +91,13 @@ namespace Console
             }
         }
 
-        public bool DequeueMessage(int id)
+        public bool DequeueMessage()
         {
             try
             {
                 QueueMessage[] retrievedMessage = _queueClient.ReceiveMessages();
-                System.Console.WriteLine($"Dequeued message: '{retrievedMessage[id].Body}'");
-                _queueClient.DeleteMessage(retrievedMessage[id].MessageId, retrievedMessage[id].PopReceipt);
+                System.Console.WriteLine($"Dequeued message: '{retrievedMessage[0].Body}'");
+                _queueClient.DeleteMessage(retrievedMessage[0].MessageId, retrievedMessage[0].PopReceipt);
                 return true;
             }
             catch (Exception ex)

@@ -3,6 +3,12 @@ using Console;
 using Xunit;
 using AutoFixture;
 using AutoFixture.AutoMoq;
+using Moq;
+using Azure;
+using Azure.Storage.Queues.Models;
+using System.Threading;
+using System;
+using System.Reflection;
 
 namespace QueueStorage.Test;
 
@@ -11,10 +17,9 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldCreateQueue()
     {
-        var fixture = new Fixture();
-        fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
-        var queueClient = fixture.Create<QueueClient>();
-        var queueRepository = new QueueRepository(queueClient);
+        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
+        QueueRepository queueRepository = new QueueRepository(queueClient);
 
         var result = queueRepository.CreateQueue();
         Assert.True(result);
@@ -23,9 +28,8 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldInsertMessage()
     {
-        var fixture = new Fixture();
-        fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
-        QueueClient queueClient = fixture.Create<QueueClient>();
+        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
         var result = queueRepository.InsertMessage("testing message");
@@ -35,36 +39,36 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldPeekMessage()
     {
-        Fixture fixture = new Fixture();
-        fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
-        QueueClient queueClient = fixture.Create<QueueClient>();
+        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
-        var result = queueRepository.PeekMessage(1);
+        queueRepository.InsertMessage("testing message");
+        var result = queueRepository.PeekMessage();
         Assert.True(result);
     }
 
     [Fact]
     public void ShouldUpdateMessage()
     {
-        Fixture fixture = new Fixture();
-        fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
-        QueueClient queueClient = fixture.Create<QueueClient>();
+        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
-        var result = queueRepository.UpdateMessage(1);
+        queueRepository.InsertMessage("testing message");
+        var result = queueRepository.UpdateMessage();
         Assert.True(result);
     }
 
     [Fact]
     public void ShouldDequeueMessage()
     {
-        Fixture fixture = new Fixture();
-        fixture.Customize(new AutoMoqCustomization { ConfigureMembers = true });
-        QueueClient queueClient = fixture.Create<QueueClient>();
+        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
-        var result = queueRepository.DequeueMessage(1);
+        queueRepository.InsertMessage("testing message");
+        var result = queueRepository.DequeueMessage();
         Assert.True(result);
     }
 }
