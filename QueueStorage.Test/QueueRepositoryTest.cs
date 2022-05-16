@@ -16,7 +16,17 @@ namespace QueueStorage.Test;
 
 public class QueueRepositoryTest
 {
-    string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+    string connectionString;
+
+    public QueueRepositoryTest()
+    {
+        connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        if (connectionString == null)
+        {
+            connectionString = "REPLACE";
+        }
+    }
+
     [Fact]
     public void ShouldCreateQueue()
     {
