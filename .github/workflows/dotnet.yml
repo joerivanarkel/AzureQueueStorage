@@ -24,7 +24,4 @@ jobs:
       env:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
     - name: Test
-      run: dotnet test
-      env:
-        connectionString: ${{ secrets.CONNECTIONSTRING }}
-
+      run: dotnet test --connectionstring=${{ secrets.CONNECTIONSTRING }}
