@@ -1,0 +1,37 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+
+  test:
+    runs-on: ubuntu-18.04
+    name: Generate Test Reports
+    steps:
+      - name: XUnit Viewer
+        id: xunit-viewer
+        uses: AutoModality/action-xunit-viewer@v1  
+      - name: Attach the report
+        uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.xunit-viewer.outputs.report-name }}
+          path: ${{ steps.xunit-viewer.outputs.report-dir }}
+
