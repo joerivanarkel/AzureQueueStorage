@@ -9,15 +9,28 @@ using Azure.Storage.Queues.Models;
 using System.Threading;
 using System;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace QueueStorage.Test;
 
 public class QueueRepositoryTest
 {
+    IConfiguration Configuration { get; set; }
+
+    public QueueRepositoryTest()
+    {
+        // the type specified here is just so the secrets library can 
+        // find the UserSecretId we added in the csproj file
+        var builder = new ConfigurationBuilder()
+            .AddUserSecrets<QueueRepositoryTest>();
+
+        Configuration = builder.Build();
+    }
+    
     [Fact]
     public void ShouldCreateQueue()
     {
-        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        string connectionString = Configuration["connectionstring"];
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
