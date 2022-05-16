@@ -1,3 +1,7 @@
+[← Return to AZ-204](README.md)<br> 
+
+[![.NET](https://github.com/joerivanarkel/AzureQueueStorage/actions/workflows/dotnet.yml/badge.svg)](https://github.com/joerivanarkel/AzureQueueStorage/actions/workflows/dotnet.yml)
+
 # AzureQueueStorage
 In this example i am Storing, Fetching, Peeking and Updating messages in Azure Queue Storage. To interact with Queue Storage, i've used the `Azure.Storage.Queues` NuGet package ans using dotnet secrets to hide the connection string formt he source code.
 
