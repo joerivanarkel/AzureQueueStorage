@@ -16,27 +16,10 @@ namespace QueueStorage.Test;
 
 public class QueueRepositoryTest
 {
-    IConfiguration Configuration { get; set; }
-
-    public QueueRepositoryTest()
-    {
-        // the type specified here is just so the secrets library can 
-        // find the UserSecretId we added in the csproj file
-        var builder = new ConfigurationBuilder()
-            .AddUserSecrets<QueueRepositoryTest>();
-
-        Configuration = builder.Build();
-    }
-    
+    string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
     [Fact]
     public void ShouldCreateQueue()
     {
-        var connectionString = Configuration["connectionstring"];
-        if (connectionString == null)
-        {
-            connectionString = Environment.GetEnvironmentVariable("connectionstring");
-        }
-        
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -47,7 +30,6 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldInsertMessage()
     {
-        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -58,7 +40,6 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldPeekMessage()
     {
-        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -70,7 +51,6 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldUpdateMessage()
     {
-        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -82,7 +62,6 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldDequeueMessage()
     {
-        string connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
