@@ -18,7 +18,7 @@ public class QueueRepositoryTest
 {
     string connectionString;
 
-    public QueueRepositoryTest()
+    public void InitializeConnectionString()
     {
         connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
         if (connectionString == null)
@@ -30,6 +30,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldCreateQueue()
     {
+        InitializeConnectionString();
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -40,6 +41,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldInsertMessage()
     {
+        InitializeConnectionString();
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -50,6 +52,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldPeekMessage()
     {
+        InitializeConnectionString();
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -61,6 +64,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldUpdateMessage()
     {
+        InitializeConnectionString();
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
@@ -72,6 +76,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldDequeueMessage()
     {
+        InitializeConnectionString();
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
