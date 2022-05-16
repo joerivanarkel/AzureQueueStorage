@@ -1,3 +1,4 @@
+using System.Data;
 using Azure.Storage.Queues;
 using Console;
 using Xunit;
@@ -30,7 +31,12 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldCreateQueue()
     {
-        string connectionString = Configuration["connectionstring"];
+        var connectionString = Configuration["connectionstring"];
+        if (connectionString == null)
+        {
+            connectionString = Environment.GetEnvironmentVariable("connectionstring");
+        }
+        
         QueueClient queueClient = new QueueClient(connectionString, "testqueue");
         QueueRepository queueRepository = new QueueRepository(queueClient);
 
