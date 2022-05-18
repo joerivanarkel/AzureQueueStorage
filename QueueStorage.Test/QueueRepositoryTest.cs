@@ -11,6 +11,7 @@ using System.Threading;
 using System;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using UserSecrets;
 
 namespace QueueStorage.Test;
 
@@ -20,7 +21,7 @@ public class QueueRepositoryTest
 
     public void InitializeConnectionString()
     {
-        connectionString = DatabaseConnection<QueueRepositoryTest>.GetSecret("connectionstring");
+        connectionString = UserSecrets<QueueRepositoryTest>.GetSecret("connectionstring");
         if (connectionString == null)
         {
             connectionString = "REPLACE";

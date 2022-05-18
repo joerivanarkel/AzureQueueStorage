@@ -1,8 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Azure.Storage.Queues;
 using Console;
+using UserSecrets;
 
-string connectionString = DatabaseConnection<Program>.GetSecret("connectionstring");
+string connectionString = UserSecrets<Program>.GetSecret("connectionstring");
 QueueClient queueClient = new QueueClient(connectionString, "testqueue");
 
 QueueRepository queueRepository = new QueueRepository(queueClient);
