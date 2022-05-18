@@ -16,7 +16,6 @@ namespace Console
         {
             try
             {
-                // Create the queue
                 _queueClient.CreateIfNotExists();
 
                 if (_queueClient.Exists())
@@ -78,7 +77,7 @@ namespace Console
                 _queueClient.UpdateMessage(message[0].MessageId,
                     message[0].PopReceipt,
                     "Updated contents",
-                    TimeSpan.FromSeconds(60.0)  // Make it invisible for another 60 seconds
+                    TimeSpan.FromSeconds(60.0)
                 );
                 System.Console.WriteLine($"Updated message: '{message[0].Body}'");
                 return true;
