@@ -3,10 +3,7 @@ using Azure.Storage.Queues;
 using Console;
 using UserSecrets;
 
-string connectionString = UserSecrets<Program>.GetSecret("connectionstring");
-QueueClient queueClient = new QueueClient(connectionString, "testqueue");
-
-QueueRepository queueRepository = new QueueRepository(queueClient);
+QueueRepository queueRepository = new QueueRepository();
 
 queueRepository.CreateQueue();
 queueRepository.InsertMessage("testing message");

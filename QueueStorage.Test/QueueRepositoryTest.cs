@@ -17,23 +17,10 @@ namespace QueueStorage.Test;
 
 public class QueueRepositoryTest
 {
-    string connectionString;
-
-    public void InitializeConnectionString()
-    {
-        connectionString = UserSecrets<QueueRepositoryTest>.GetSecret("connectionstring");
-        if (connectionString == null)
-        {
-            connectionString = "REPLACE";
-        }
-    }
-
     [Fact]
     public void ShouldCreateQueue()
     {
-        InitializeConnectionString();
-        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
-        QueueRepository queueRepository = new QueueRepository(queueClient);
+        QueueRepository queueRepository = new QueueRepository();
 
         var result = queueRepository.CreateQueue();
         Assert.True(result);
@@ -42,9 +29,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldInsertMessage()
     {
-        InitializeConnectionString();
-        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
-        QueueRepository queueRepository = new QueueRepository(queueClient);
+        QueueRepository queueRepository = new QueueRepository();
 
         var result = queueRepository.InsertMessage("testing message");
         Assert.True(result);
@@ -53,9 +38,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldPeekMessage()
     {
-        InitializeConnectionString();
-        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
-        QueueRepository queueRepository = new QueueRepository(queueClient);
+        QueueRepository queueRepository = new QueueRepository();
 
         queueRepository.InsertMessage("testing message");
         var result = queueRepository.PeekMessage();
@@ -65,9 +48,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldUpdateMessage()
     {
-        InitializeConnectionString();
-        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
-        QueueRepository queueRepository = new QueueRepository(queueClient);
+        QueueRepository queueRepository = new QueueRepository();
 
         queueRepository.InsertMessage("testing message");
         var result = queueRepository.UpdateMessage();
@@ -77,9 +58,7 @@ public class QueueRepositoryTest
     [Fact]
     public void ShouldDequeueMessage()
     {
-        InitializeConnectionString();
-        QueueClient queueClient = new QueueClient(connectionString, "testqueue");
-        QueueRepository queueRepository = new QueueRepository(queueClient);
+        QueueRepository queueRepository = new QueueRepository();
 
         queueRepository.InsertMessage("testing message");
         var result = queueRepository.DequeueMessage();

@@ -1,5 +1,6 @@
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using UserSecrets;
 
 namespace Console
 {
@@ -7,9 +8,10 @@ namespace Console
     {
         private QueueClient _queueClient;
 
-        public QueueRepository(QueueClient queueClient)
+        public QueueRepository()
         {
-            _queueClient = queueClient;
+            string connectionString = UserSecrets<Program>.GetSecret("connectionstring");
+            QueueClient _queueClient = new QueueClient(connectionString, "testqueue");
         }
 
         public bool CreateQueue()
