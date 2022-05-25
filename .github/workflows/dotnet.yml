@@ -21,7 +21,3 @@ jobs:
       run: dotnet build --no-restore
       env:
         connectionstring: ${{ secrets.CONNECTIONSTRING }}
-    - name: Test
-      run: dotnet test --no-restore
-      env:
-        connectionstring: ${{ secrets.CONNECTIONSTRING }}
